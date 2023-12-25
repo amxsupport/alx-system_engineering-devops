@@ -8,6 +8,6 @@ file_line { 'ssh_config':
 file_line { 'ssh_config_2':
     ensure   => present,
     path     => '/etc/ssh/ssh_config',
-    line     => 'IdentityFile ~/.ssh/holberton',
+    line     => 'IdentityFile ~/.ssh/school',
     multiple => 'true'
 }
