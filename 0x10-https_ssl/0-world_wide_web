@@ -1,28 +1,16 @@
 #!/usr/bin/env bash
-#displays information about subdomains
-function subdomains () {
-    if [ $# -eq 1 ]; then
-	www="www.$1"
-	lb="lb-01.$1"
-	web1="web-01.$1"
-	web2="web-02.$1"
-	www_record_type="$(dig $www | grep -A1 'ANSWER SECTION:' | sed -n 2p | awk '{print $4}')"
-	www_dest="$(dig $www | grep -A1 'ANSWER SECTION:' | sed -n 2p | awk '{print $5}')"
-	echo "The subdomain www is a $www_record_type record and points to $www_dest"
-	lb_record_type="$(dig $lb | grep -A1 'ANSWER SECTION:' | sed -n 2p | awk '{print $4}')"
-	lb_dest="$(dig $lb | grep -A1 'ANSWER SECTION:' | sed -n 2p | awk '{print $5}')"
-	echo "The subdomain lb-01 is a $lb_record_type record and points to $lb_dest"
-	web1_record_type="$(dig $web1 | grep -A1 'ANSWER SECTION:' | sed -n 2p | awk '{print $4}')"
-	web1_dest="$(dig $web1 | grep -A1 'ANSWER SECTION:' | sed -n 2p | awk '{print $5}')"
-	echo "The subdomain web-01 is a $web1_record_type record and points to $web1_dest"
-	web2_record_type="$(dig $web2 | grep -A1 'ANSWER SECTION:' | sed -n 2p | awk '{print $4}')"
-	web2_dest="$(dig $web2 | grep -A1 'ANSWER SECTION:' | sed -n 2p | awk '{print $5}')"
-	echo "The subdomain web-02 is a $web2_record_type record and points to $web2_dest"
-    elif [ $#  -eq 2 ]; then
-	sub_domain="$2.$1"
-	sub_domain_record_type="$(dig $sub_domain | grep -A1 'ANSWER SECTION:' | sed -n 2p | awk '{print $4}')"
-	sub_domain_dest="$(dig $sub_domain | grep -A1 'ANSWER SECTION:' | sed -n 2p | awk '{print $5}')"
-	echo "The subdomain $2 is a $sub_domain_record_type record and points to $sub_domain_dest"
-    fi
+# Bash script that will display information about subdomains
+domain () {
+if [ "$2" ];
+then
+    echo -n "The subdomain $2 is a"
+    dig "$2.$1" | grep -A1 'ANSWER SECTION:' | awk '{print " " $4 " record and points to " $5}' | tail -n 1
+else
+    for i in www lb-01 web-01 web-02
+    do
+        echo -n "The subdomain $i is a"
+        dig "$i.$1" | grep -A1 'ANSWER SECTION:' | awk '{print " " $4 " record and points to " $5}' | tail -n 1
+    done
+fi
 }
-subdomains $1 $2
+domain "$1" "$2"
