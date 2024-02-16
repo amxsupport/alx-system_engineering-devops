@@ -5,12 +5,7 @@ on my three Alx servers.
 
 ## Tasks :page_with_curl:
 
-* **0. Monitor your Nginx traffic**
-  * [0-monitor_your_nginx_traffic](./0-monitor_your_nginx_traffic): Text file containing
-  my Sumo Logic access key.
-    * First line: `Access ID`
-    * Second line: `Access Key`
+* **2. Create a dashboard**
 
-* **1. Monitor your server**
-  * For this task, I configured Sumo Logic to monitor my server's memory, CPU, network
-  and disk.
+ * [2-setup_datadog](./2-setup_datadog): Text file containing
+    the dashboard_id on the first line.
